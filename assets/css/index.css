@@ -10,7 +10,7 @@
   --red: #FF2442;
   --text: #ffffff;
   --text2: #888888;
-  --text3: #3a3a3a;
+  --text3: #666666;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
