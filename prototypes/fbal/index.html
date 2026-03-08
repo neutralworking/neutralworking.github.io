@@ -20,7 +20,10 @@
     <div class="game-container">
       <!-- Top Bar -->
       <header class="top-bar">
-        <div class="game-title">⚽ FOOTBALL BALATRO</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <a href="../../index.html" style="font-size:0.68rem;color:rgba(255,255,255,0.3);text-decoration:none;font-weight:700;">← index</a>
+          <div class="game-title">⚽ FOOTBALL BALATRO</div>
+        </div>
 
         <div class="match-info">
           <div class="team-name home">
@@ -99,19 +102,13 @@
 
         <!-- Left: Model/Visual -->
         <div class="detail-model-view">
-          <div style="text-align: center">
-            <div style="font-size: 8rem">👤</div>
-            <h2 id="detailName" class="detail-name">Player Name</h2>
-            <span
-              id="detailPos"
-              style="
-                background: var(--accent-blue);
-                padding: 5px 10px;
-                border-radius: 4px;
-                font-weight: bold;
-              "
-              >POS</span
-            >
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:100%;background:linear-gradient(160deg,#1e2a3a 0%,#0d1117 100%);border-radius:12px;padding:28px 20px;text-align:center;border:1px solid #30363d;">
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#8b949e;margin-bottom:12px;" id="detailLevel">LV —</div>
+              <h2 id="detailName" class="detail-name" style="font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px;">Player Name</h2>
+              <span id="detailPos" style="background:var(--accent-blue);padding:4px 12px;border-radius:4px;font-weight:700;font-size:0.8rem;">POS</span>
+            </div>
+            <div id="detailClasses" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;"></div>
           </div>
         </div>
 

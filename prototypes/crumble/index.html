@@ -148,7 +148,16 @@
     }
 
     .product-image-placeholder {
-      font-size: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .product-image-placeholder svg {
+      opacity: 0.25;
+    }
+    .product-image-placeholder span {
+      font-size: 0.68rem;
       color: var(--color-mid);
       text-transform: lowercase;
       letter-spacing: 0.06em;
@@ -229,7 +238,10 @@
 <body>
 
   <header class="site-header">
-    <span class="logo">crumble</span>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="../../index.html" style="font-size:0.72rem;color:var(--color-mid);text-decoration:none;font-weight:700;">← index</a>
+      <span class="logo">crumble</span>
+    </div>
     <nav class="nav">
       <a href="#">obchod</a>
       <a href="#">remeselnici</a>
@@ -261,7 +273,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#f5edd8;">
-        <span class="product-image-placeholder">soy candle 200g</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>soy candle 200g</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">
@@ -275,7 +287,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#ede0d0;">
-        <span class="product-image-placeholder">sterling silver 925</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>sterling silver 925</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">
@@ -289,7 +301,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#dde5d8;">
-        <span class="product-image-placeholder">acrylic on canvas 30x40</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>acrylic on canvas 30x40</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">
@@ -303,7 +315,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#f0ead8;">
-        <span class="product-image-placeholder">linen tote 38x42cm</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>linen tote 38x42cm</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">
@@ -317,7 +329,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#f2e8d8;">
-        <span class="product-image-placeholder">soy candle ceramic 220g</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>soy candle ceramic 220g</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">
@@ -331,7 +343,7 @@
 
     <div class="product-card">
       <div class="product-image" style="background:#e0dce8;">
-        <span class="product-image-placeholder">watercolour A4</span>
+        <div class="product-image-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>watercolour A4</span></div>
         <div class="product-overlay"><button class="product-overlay-btn">pridat do kosarku</button></div>
       </div>
       <div class="product-info">

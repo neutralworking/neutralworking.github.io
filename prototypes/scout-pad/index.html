@@ -175,7 +175,11 @@
     }
     .btn-save {
       flex: 2.5; height: 46px; border-radius: 12px; font-size: 0.9rem; font-weight: 700;
-      background: var(--green); border: 1px solid var(--green); color: white;
+      background: var(--surface2); border: 1px solid var(--border2); color: var(--text3);
+      cursor: default; transition: all 0.2s;
+    }
+    .btn-save.hot {
+      background: var(--green); border-color: var(--green); color: white;
       cursor: pointer; box-shadow: 0 3px 16px rgba(34,197,94,0.25);
     }
   </style>
@@ -185,7 +189,10 @@
     <!-- Topbar -->
     <div class="topbar">
       <span class="topbar-logo">Scout Pad</span>
-      <span class="topbar-count">1 / 8</span>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="../../index.html" style="font-size:0.68rem;color:var(--text3);text-decoration:none;font-weight:600;">← index</a>
+        <span class="topbar-count">1 / 8</span>
+      </div>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
 
@@ -320,7 +327,7 @@
     <!-- Action bar -->
     <div class="action-bar">
       <button class="btn-skip">Skip <span style="opacity:0.3;font-size:0.68rem">esc</span></button>
-      <button class="btn-save">Save &amp; Next <span style="opacity:0.45;font-size:0.7rem">&#8629;</span></button>
+      <button class="btn-save" id="btn-save">No changes</button>
     </div>
   </div>
 
@@ -332,16 +339,28 @@
       document.getElementById('panel-' + name).classList.add('active');
     }
 
+    let hasDraft = false;
+
+    function updateSaveBtn() {
+      const btn = document.getElementById('btn-save');
+      hasDraft = document.querySelector('.pursuit-btn.active-pass, .pursuit-btn.active-watch, .pursuit-btn.active-interested, .pursuit-btn.active-priority') !== null
+        || document.querySelector('.val-input').value.trim() !== ''
+        || document.querySelector('.fit-input').value.trim() !== ''
+        || document.querySelector('.notes-area').value.trim() !== '';
+      btn.classList.toggle('hot', hasDraft);
+      btn.textContent = hasDraft ? 'Save & Next ↵' : 'No changes';
+    }
+
+    document.querySelector('.val-input').addEventListener('input', updateSaveBtn);
+    document.querySelector('.fit-input').addEventListener('input', updateSaveBtn);
+    document.querySelector('.notes-area').addEventListener('input', updateSaveBtn);
+
     function togglePursuit(btn) {
       const pursuit = btn.dataset.pursuit;
       const isActive = btn.classList.contains('active-' + pursuit);
-      // clear all
-      document.querySelectorAll('.pursuit-btn').forEach(b => {
-        b.className = 'pursuit-btn';
-      });
-      if (!isActive) {
-        btn.classList.add('active-' + pursuit);
-      }
+      document.querySelectorAll('.pursuit-btn').forEach(b => { b.className = 'pursuit-btn'; });
+      if (!isActive) btn.classList.add('active-' + pursuit);
+      updateSaveBtn();
     }
   </script>
 </body>

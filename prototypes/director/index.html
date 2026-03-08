@@ -124,6 +124,7 @@
     }
 
     .sidebar-link:hover { background: rgba(255,255,255,0.05); }
+    .sidebar-link--dim { opacity: 0.35; cursor: default; pointer-events: none; }
 
     .sidebar-link.active {
       color: white;
@@ -267,7 +268,10 @@
 
   <!-- Top bar -->
   <div class="topbar">
-    <span class="topbar-club">FC Sparta Praha</span>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="../../index.html" style="font-size:0.68rem;color:rgba(232,223,208,0.4);text-decoration:none;font-weight:600;">← index</a>
+      <span class="topbar-club">FC Sparta Praha</span>
+    </div>
     <div class="topbar-center">
       <span class="topbar-director">Marek Novak, DoF</span>
       <span class="topbar-meta">Fri 14 Mar 2025 &nbsp;·&nbsp; 2024/25 Season</span>
@@ -282,32 +286,32 @@
       <div class="sidebar-section">
         <div class="sidebar-heading">Overview</div>
         <div class="sidebar-link active" onclick="showScreen('home', this)">
-          <span class="sidebar-icon">&#8962;</span> Home
+          <span class="sidebar-icon">⌂</span> Home
         </div>
         <div class="sidebar-link" onclick="showScreen('inbox', this)">
-          <span class="sidebar-icon">&#9993;</span> Inbox
+          <span class="sidebar-icon">✉</span> Inbox
           <span style="margin-left:auto;font-size:0.65rem;background:var(--teal);color:white;padding:1px 5px;border-radius:8px">4</span>
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-heading">Squad</div>
-        <div class="sidebar-link" onclick="showScreen('squad', this)">
-          <span class="sidebar-icon">&#128101;</span> Squad
+        <div class="sidebar-link sidebar-link--dim">
+          <span class="sidebar-icon">◈</span> Squad
         </div>
-        <div class="sidebar-link" onclick="showScreen('market', this)">
-          <span class="sidebar-icon">&#8646;</span> Market
+        <div class="sidebar-link sidebar-link--dim">
+          <span class="sidebar-icon">⇄</span> Market
         </div>
-        <div class="sidebar-link" onclick="showScreen('scouting', this)">
-          <span class="sidebar-icon">&#128270;</span> Scouting
+        <div class="sidebar-link sidebar-link--dim">
+          <span class="sidebar-icon">◎</span> Scouting
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-heading">Club</div>
-        <div class="sidebar-link" onclick="showScreen('club', this)">
-          <span class="sidebar-icon">&#127963;</span> Club
+        <div class="sidebar-link sidebar-link--dim">
+          <span class="sidebar-icon">◻</span> Club
         </div>
-        <div class="sidebar-link" onclick="showScreen('calendar', this)">
-          <span class="sidebar-icon">&#128197;</span> Calendar
+        <div class="sidebar-link sidebar-link--dim">
+          <span class="sidebar-icon">▦</span> Calendar
         </div>
       </div>
     </nav>
@@ -341,8 +345,19 @@
           </div>
         </div>
         <div class="screen-title">Recent</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:0.8rem;color:var(--text2);">
-          No recent actions. Use Inbox to respond to messages from your staff.
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:0.8rem;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:var(--text);">Responded to Manager — midfield requirements noted</span>
+            <span style="color:var(--text3);font-size:0.7rem;white-space:nowrap;margin-left:16px;">Today</span>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:0.8rem;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:var(--text);">Scouting focus updated — DM / CM profiles, Czech Liga</span>
+            <span style="color:var(--text3);font-size:0.7rem;white-space:nowrap;margin-left:16px;">Mon</span>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:0.8rem;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:var(--text);">Board meeting — Q1 review accepted, budget unchanged</span>
+            <span style="color:var(--text3);font-size:0.7rem;white-space:nowrap;margin-left:16px;">Fri</span>
+          </div>
         </div>
       </div>
 
@@ -402,28 +417,6 @@
           </div>
 
         </div>
-      </div>
-
-      <!-- Stub screens -->
-      <div class="screen" id="screen-squad">
-        <div class="screen-title">Squad</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Squad management — coming soon</div>
-      </div>
-      <div class="screen" id="screen-market">
-        <div class="screen-title">Market</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Transfer market — coming soon</div>
-      </div>
-      <div class="screen" id="screen-scouting">
-        <div class="screen-title">Scouting</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Scouting radar — coming soon</div>
-      </div>
-      <div class="screen" id="screen-club">
-        <div class="screen-title">Club</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Club management — coming soon</div>
-      </div>
-      <div class="screen" id="screen-calendar">
-        <div class="screen-title">Calendar</div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Calendar — coming soon</div>
       </div>
 
     </main>
