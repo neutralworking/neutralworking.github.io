@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Football Balatro - Match Simulator</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="game-title">⚽ FOOTBALL BALATRO</div>
+
+        <div class="match-info">
+          <div class="team-name home">
+            ARSENAL
+            <div style="font-size: 0.7rem; color: var(--text-secondary);">4-3-3 • Balanced</div>
+          </div>
+          <div class="score">
+            <span id="scoreHome">0</span> - <span id="scoreAway">0</span>
+            <div id="matchTime" style="font-size: 0.8rem; color: var(--accent-gold); margin-top: 5px;">0'</div>
+          </div>
+          <div class="team-name away">PSG</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-reset" onclick="resetMatch()">Reset</button>
+          <button class="btn btn-simulate" onclick="advanceMatch()">▶ Advance (15')</button>
+          <button class="btn btn-simulate" style="background: var(--accent-green);" onclick="simulateMatch()">⚡ Sim Match</button>
+        </div>
+      </header>
+
+      <!-- Main Game Area -->
+      <div class="main-area">
+        <!-- Left: Stats Panel -->
+        <aside class="stats-panel" id="statsContainer">
+          <!-- Stats injected by JS -->
+          <div class="loading">Loading stats...</div>
+        </aside>
+
+        <!-- Center: Pitch -->
+        <div class="pitch-container">
+          <!-- Pitch Markings -->
+          <div class="pitch-lines">
+            <div class="pitch-half-line"></div>
+            <div class="pitch-center-circle"></div>
+            <div class="pitch-box-top"></div>
+            <div class="pitch-box-bottom"></div>
+          </div>
+
+          <!-- Players injected here by JS -->
+          <div id="pitch" class="formation-grid"></div>
+        </div>
+
+        <!-- Right: Match Log -->
+        <aside class="log-panel" id="matchLog">
+          <div class="log-entry">Welcome to the match simulator.</div>
+          <div class="log-entry">
+            Drag players to swap positions. Click for details.
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom: Bench & Skills -->
+      <div class="bench-container">
+        <div class="bench-label">SUBSTITUTES</div>
+        <div class="bench-slots" id="benchSlots">
+          <!-- Bench slots injected by JS -->
+        </div>
+
+        <div
+          style="width: 2px; background: rgba(255, 255, 255, 0.1); height: 80%"
+        ></div>
+
+        <div class="bench-label" style="color: var(--accent-gold)">
+          MANAGER SKILLS
+        </div>
+        <div class="bench-slots" id="skillSlots">
+          <!-- Skill slots injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Detail Modal -->
+    <div class="modal-overlay" id="cardModal">
+      <div class="card-detail-view" id="modalContent">
+        <button class="close-modal" onclick="closeModal()">×</button>
+
+        <!-- Left: Model/Visual -->
+        <div class="detail-model-view">
+          <div style="text-align: center">
+            <div style="font-size: 8rem">👤</div>
+            <h2 id="detailName" class="detail-name">Player Name</h2>
+            <span
+              id="detailPos"
+              style="
+                background: var(--accent-blue);
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-weight: bold;
+              "
+              >POS</span
+            >
+          </div>
+        </div>
+
+        <!-- Right: Stats -->
+        <div class="detail-stats-view">
+          <div class="detail-meta">
+            <div class="detail-tag" id="detailClass">Class</div>
+          </div>
+          <h3>Attributes</h3>
+          <div class="hex-chart-container">
+            <canvas id="playerRadar"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logic -->
+    <script src="app.js"></script>
+  </body>
+</html>

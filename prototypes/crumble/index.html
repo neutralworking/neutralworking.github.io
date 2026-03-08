@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crumble — Art Prints</title>
+  <style>
+    :root {
+      --color-vanilla: #faf8f2;
+      --color-cream: #f2ede3;
+      --color-carbon: #1a1a18;
+      --color-carbon-soft: #3a3a36;
+      --color-mid: #8a8880;
+      --color-rule: #ddd9cf;
+      --color-burgundy: #6e1a2a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--color-vanilla);
+      color: var(--color-carbon);
+      font-family: Georgia, "Times New Roman", serif;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Header ── */
+    .site-header {
+      border-bottom: 1px solid var(--color-rule);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: lowercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 28px;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+    }
+
+    .nav a:hover { color: var(--color-carbon); }
+
+    .cart-icon {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+      cursor: pointer;
+    }
+
+    /* ── Category filter bar ── */
+    .filter-bar {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--color-rule);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+      margin-right: 4px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--color-rule);
+      background: transparent;
+      color: var(--color-mid);
+      font-family: inherit;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      padding: 6px 14px;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--color-carbon);
+      color: var(--color-carbon);
+    }
+
+    .filter-btn.active {
+      background: var(--color-carbon);
+      color: var(--color-vanilla);
+    }
+
+    /* ── Product grid ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--color-rule);
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .product-card {
+      background: var(--color-vanilla);
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .product-card:hover { background: var(--color-cream); }
+
+    .product-image {
+      aspect-ratio: 3/4;
+      background: var(--color-cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-image-placeholder {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+    }
+
+    .product-card:hover .product-overlay {
+      opacity: 1;
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,26,24,0.04);
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .product-overlay-btn {
+      width: 100%;
+      border: 1px solid var(--color-carbon);
+      background: var(--color-vanilla);
+      color: var(--color-carbon);
+      font-family: inherit;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      padding: 9px;
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    .product-info {
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .product-title {
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .product-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+    }
+
+    .product-price {
+      font-size: 0.88rem;
+      color: var(--color-carbon);
+    }
+
+    .product-price-burgundy {
+      color: var(--color-burgundy);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      border-top: 1px solid var(--color-rule);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--color-mid);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <span class="logo">crumble</span>
+    <nav class="nav">
+      <a href="#">shop</a>
+      <a href="#">artists</a>
+      <a href="#">about</a>
+    </nav>
+    <span class="cart-icon">cart (0)</span>
+  </header>
+
+  <!-- Category filter -->
+  <div class="filter-bar">
+    <span class="filter-label">filter</span>
+    <button class="filter-btn active" onclick="setFilter(this)">all</button>
+    <button class="filter-btn" onclick="setFilter(this)">prints</button>
+    <button class="filter-btn" onclick="setFilter(this)">originals</button>
+    <button class="filter-btn" onclick="setFilter(this)">artist: Novak</button>
+    <button class="filter-btn" onclick="setFilter(this)">artist: Horak</button>
+  </div>
+
+  <!-- Product grid -->
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="product-image">
+        <span class="product-image-placeholder">310 &times; 420 mm</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Zima v Praze</div>
+        <div class="product-meta">
+          <span class="product-type">print · edition of 30</span>
+          <span class="product-price">1 200 Kc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image" style="background:#e8e0d4;">
+        <span class="product-image-placeholder">A2 original</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Cervene Pole</div>
+        <div class="product-meta">
+          <span class="product-type">original · unique</span>
+          <span class="product-price product-price-burgundy">8 500 Kc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image" style="background:#dde0dd;">
+        <span class="product-image-placeholder">210 &times; 297 mm</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Mlha nad rekoy</div>
+        <div class="product-meta">
+          <span class="product-type">print · edition of 50</span>
+          <span class="product-price">780 Kc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image" style="background:#e4dcd0;">
+        <span class="product-image-placeholder">500 &times; 700 mm</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Stara Mapa</div>
+        <div class="product-meta">
+          <span class="product-type">print · edition of 20</span>
+          <span class="product-price">2 400 Kc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image" style="background:#e0dde8;">
+        <span class="product-image-placeholder">A3 original</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Nocni Trh</div>
+        <div class="product-meta">
+          <span class="product-type">original · unique</span>
+          <span class="product-price product-price-burgundy">5 200 Kc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image" style="background:#dfe2e0;">
+        <span class="product-image-placeholder">297 &times; 420 mm</span>
+        <div class="product-overlay">
+          <button class="product-overlay-btn">add to cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">Zahrada v srpnu</div>
+        <div class="product-meta">
+          <span class="product-type">print · edition of 40</span>
+          <span class="product-price">950 Kc</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <span class="footer-text">crumble &mdash; prints from Czech artists</span>
+    <span class="footer-text">Praha, CZ</span>
+  </footer>
+
+  <script>
+    function setFilter(btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

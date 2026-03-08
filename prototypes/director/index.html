@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Director — DoF Simulation</title>
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --surface: #ffffff;
+      --surface2: #f0ebe0;
+      --border: rgba(94,82,64,0.18);
+      --teal: #2d8b9e;
+      --teal-dim: rgba(45,139,158,0.12);
+      --teal-dark: #1d748a;
+      --brown: #3d2b1f;
+      --brown-mid: #6b5040;
+      --cream: #f5f0e8;
+      --text: #13343b;
+      --text2: #626c71;
+      --text3: #9aa0a3;
+      --sidebar-bg: #1f2121;
+      --sidebar-text: #c8cbc9;
+      --sidebar-text2: #6a706e;
+      --sidebar-active: #2d8b9e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "SF Pro Text", sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      height: 52px;
+      background: var(--brown);
+      color: #e8dfd0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+
+    .topbar-club {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .topbar-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .topbar-director { font-size: 0.8rem; font-weight: 600; }
+    .topbar-meta { font-size: 0.65rem; color: rgba(232,223,208,0.55); letter-spacing: 0.04em; }
+
+    .topbar-advance {
+      background: var(--teal);
+      border: none;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* ── App layout ── */
+    .app-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 180px;
+      background: var(--sidebar-bg);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      margin-bottom: 6px;
+    }
+
+    .sidebar-heading {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sidebar-text2);
+      padding: 0 16px 6px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      font-size: 0.8rem;
+      color: var(--sidebar-text);
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+      border-left: 2px solid transparent;
+      user-select: none;
+    }
+
+    .sidebar-link:hover { background: rgba(255,255,255,0.05); }
+
+    .sidebar-link.active {
+      color: white;
+      border-left-color: var(--teal);
+      background: rgba(45,139,158,0.12);
+    }
+
+    .sidebar-icon { font-size: 0.9rem; width: 16px; text-align: center; }
+
+    /* ── Main content ── */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── Home screen ── */
+    .screen-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .status-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .tile-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 8px;
+    }
+
+    .tile-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .tile-sub {
+      font-size: 0.72rem;
+      color: var(--text2);
+    }
+
+    .tile-good { border-left: 3px solid #2d8b9e; }
+    .tile-warn { border-left: 3px solid #c07820; }
+    .tile-ok   { border-left: 3px solid #5a8a5a; }
+    .tile-info { border-left: 3px solid #6a6a9a; }
+
+    /* ── Inbox screen ── */
+    .inbox-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .inbox-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: background 0.1s;
+      margin-bottom: 6px;
+    }
+
+    .inbox-item:hover { background: var(--surface2); }
+    .inbox-item.unread { border-left: 3px solid var(--teal); }
+
+    .inbox-sender-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .tag-chairman { background: rgba(61,43,31,0.12); color: var(--brown-mid); }
+    .tag-manager  { background: var(--teal-dim); color: var(--teal-dark); }
+    .tag-scout    { background: rgba(90,138,90,0.12); color: #4a7a4a; }
+    .tag-agent    { background: rgba(100,80,150,0.12); color: #6060a0; }
+
+    .inbox-body { flex: 1; min-width: 0; }
+
+    .inbox-from {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .inbox-subject {
+      font-size: 0.8rem;
+      color: var(--text);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .inbox-preview {
+      font-size: 0.73rem;
+      color: var(--text2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .inbox-date {
+      font-size: 0.65rem;
+      color: var(--text3);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="topbar-club">FC Sparta Praha</span>
+    <div class="topbar-center">
+      <span class="topbar-director">Marek Novak, DoF</span>
+      <span class="topbar-meta">Fri 14 Mar 2025 &nbsp;·&nbsp; 2024/25 Season</span>
+    </div>
+    <button class="topbar-advance">Advance &rarr;</button>
+  </div>
+
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Overview</div>
+        <div class="sidebar-link active" onclick="showScreen('home', this)">
+          <span class="sidebar-icon">&#8962;</span> Home
+        </div>
+        <div class="sidebar-link" onclick="showScreen('inbox', this)">
+          <span class="sidebar-icon">&#9993;</span> Inbox
+          <span style="margin-left:auto;font-size:0.65rem;background:var(--teal);color:white;padding:1px 5px;border-radius:8px">4</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Squad</div>
+        <div class="sidebar-link" onclick="showScreen('squad', this)">
+          <span class="sidebar-icon">&#128101;</span> Squad
+        </div>
+        <div class="sidebar-link" onclick="showScreen('market', this)">
+          <span class="sidebar-icon">&#8646;</span> Market
+        </div>
+        <div class="sidebar-link" onclick="showScreen('scouting', this)">
+          <span class="sidebar-icon">&#128270;</span> Scouting
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Club</div>
+        <div class="sidebar-link" onclick="showScreen('club', this)">
+          <span class="sidebar-icon">&#127963;</span> Club
+        </div>
+        <div class="sidebar-link" onclick="showScreen('calendar', this)">
+          <span class="sidebar-icon">&#128197;</span> Calendar
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- Home screen -->
+      <div class="screen active" id="screen-home">
+        <div class="screen-title">Dashboard</div>
+        <div class="status-grid">
+          <div class="status-tile tile-good">
+            <div class="tile-label">Budget</div>
+            <div class="tile-value">€4.2M</div>
+            <div class="tile-sub">Transfer window available</div>
+          </div>
+          <div class="status-tile tile-warn">
+            <div class="tile-label">Chairman</div>
+            <div class="tile-value">67%</div>
+            <div class="tile-sub">Expectations: Top 4 finish</div>
+          </div>
+          <div class="status-tile tile-ok">
+            <div class="tile-label">Manager</div>
+            <div class="tile-value">Good</div>
+            <div class="tile-sub">Wants a CM before deadline</div>
+          </div>
+          <div class="status-tile tile-info">
+            <div class="tile-label">Next Match</div>
+            <div class="tile-value">Sun</div>
+            <div class="tile-sub">vs. Viktoria Plzen &middot; 15:00</div>
+          </div>
+        </div>
+        <div class="screen-title">Recent</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:0.8rem;color:var(--text2);">
+          No recent actions. Use Inbox to respond to messages from your staff.
+        </div>
+      </div>
+
+      <!-- Inbox screen -->
+      <div class="screen" id="screen-inbox">
+        <div class="screen-title">Inbox &mdash; 4 unread</div>
+        <div class="inbox-list">
+
+          <div class="inbox-item unread">
+            <span class="inbox-sender-tag tag-chairman">Chairman</span>
+            <div class="inbox-body">
+              <div class="inbox-from">Josef Kolar &mdash; Club Chairman</div>
+              <div class="inbox-subject">Q1 Performance Review</div>
+              <div class="inbox-preview">Transfer spend is within budget. The board expects improvement in squad depth before the winter window closes...</div>
+            </div>
+            <span class="inbox-date">Today</span>
+          </div>
+
+          <div class="inbox-item unread">
+            <span class="inbox-sender-tag tag-manager">Manager</span>
+            <div class="inbox-body">
+              <div class="inbox-from">Pavel Dvorak &mdash; Head Coach</div>
+              <div class="inbox-subject">We need a holding midfielder</div>
+              <div class="inbox-preview">After Sunday's match I need to be direct — our midfield is too exposed without a dedicated DM. This is Priority 1 for me...</div>
+            </div>
+            <span class="inbox-date">Today</span>
+          </div>
+
+          <div class="inbox-item unread">
+            <span class="inbox-sender-tag tag-scout">Scout</span>
+            <div class="inbox-body">
+              <div class="inbox-from">Tomas Beran &mdash; Chief Scout</div>
+              <div class="inbox-subject">Weekly Recruitment Update</div>
+              <div class="inbox-preview">Three profiles flagged this week matching CM/DM criteria. Recommending Marek Cech (Bohemians) as priority visit...</div>
+            </div>
+            <span class="inbox-date">Mon</span>
+          </div>
+
+          <div class="inbox-item unread">
+            <span class="inbox-sender-tag tag-agent">Agent</span>
+            <div class="inbox-body">
+              <div class="inbox-from">Lukas Stransky &mdash; Sports Agent</div>
+              <div class="inbox-subject">Client available for loan</div>
+              <div class="inbox-preview">My client, Ondrej Fiala (24, CM, Sigma Olomouc) is open to a move this window. Very reasonable fee...</div>
+            </div>
+            <span class="inbox-date">Sun</span>
+          </div>
+
+          <div class="inbox-item">
+            <span class="inbox-sender-tag tag-manager">Manager</span>
+            <div class="inbox-body">
+              <div class="inbox-from">Pavel Dvorak &mdash; Head Coach</div>
+              <div class="inbox-subject">Squad Strength Review &mdash; March</div>
+              <div class="inbox-preview">Overall I am satisfied with the group. The new signing has integrated well. Fitness levels are good ahead of the run-in...</div>
+            </div>
+            <span class="inbox-date">Sat</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stub screens -->
+      <div class="screen" id="screen-squad">
+        <div class="screen-title">Squad</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Squad management — coming soon</div>
+      </div>
+      <div class="screen" id="screen-market">
+        <div class="screen-title">Market</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Transfer market — coming soon</div>
+      </div>
+      <div class="screen" id="screen-scouting">
+        <div class="screen-title">Scouting</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Scouting radar — coming soon</div>
+      </div>
+      <div class="screen" id="screen-club">
+        <div class="screen-title">Club</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Club management — coming soon</div>
+      </div>
+      <div class="screen" id="screen-calendar">
+        <div class="screen-title">Calendar</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;color:var(--text2);font-size:0.85rem;">Calendar — coming soon</div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function showScreen(name, link) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('screen-' + name).classList.add('active');
+      link.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
