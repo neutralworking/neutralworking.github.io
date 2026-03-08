@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neutral Working — Prototypes</title>
+  <title>neutralworking — product review</title>
   <link rel="stylesheet" href="assets/css/index.css" />
 </head>
 <body>
   <header class="site-header">
-    <span class="site-logo">Neutral Working</span>
-    <span class="site-sub">Design Review</span>
+    <span class="site-logo">neutralworking</span>
+    <span class="site-sub">product review</span>
   </header>
+
+  <div class="section-label">Active</div>
 
   <main class="grid">
 
     <a class="card" href="prototypes/scout-pad/">
       <div class="card-top">
         <span class="card-name">Scout Pad</span>
-        <span class="badge badge-live">Live</span>
+        <span class="badge badge-live">Live · Vercel</span>
       </div>
-      <p class="card-desc">Director of Football player decision tool — queue-based scouting interface</p>
+      <p class="card-desc">Director of Football scouting tool. Mobile-first queue interface for evaluating technical and mental attributes, verifying calculated scores, and building statistical profiles from FBref data.</p>
       <span class="card-link">View prototype &rarr;</span>
     </a>
 
@@ -28,28 +30,51 @@
         <span class="card-name">Football Balatro</span>
         <span class="badge badge-proto">Prototype</span>
       </div>
-      <p class="card-desc">Roguelike card game with match simulation — fully playable HTML demo</p>
+      <p class="card-desc">Roguelike football management card game. Squad building, manager skill cards, turn-based match simulation, XP progression and level-up choices.</p>
       <span class="card-link">View prototype &rarr;</span>
     </a>
 
     <a class="card" href="prototypes/director/">
       <div class="card-top">
         <span class="card-name">Director</span>
-        <span class="badge badge-dev">In development</span>
+        <span class="badge badge-dev">Concept</span>
       </div>
-      <p class="card-desc">DoF simulation game — Home screen and Inbox navigation mockup</p>
+      <p class="card-desc">Premier League Director of Football simulation game. Inbox-driven management — chairman expectations, manager requirements, transfer negotiations, scouting pipeline.</p>
       <span class="card-link">View prototype &rarr;</span>
     </a>
 
-    <a class="card" href="prototypes/crumble/">
+    <a class="card" href="https://crumble.cz" target="_blank" rel="noopener">
       <div class="card-top">
         <span class="card-name">Crumble</span>
-        <span class="badge badge-dev">In development</span>
+        <span class="badge badge-live">Live · crumble.cz</span>
       </div>
-      <p class="card-desc">Czech art print store — editorial shop with category filter</p>
-      <span class="card-link">View prototype &rarr;</span>
+      <p class="card-desc">Czech handcraft marketplace. Editorial product shop with serif typography, cream palette, and artist-direct purchasing. Live at crumble.cz — design feedback in progress.</p>
+      <span class="card-link">Open live site &rarr;</span>
     </a>
 
   </main>
+
+  <div class="section-label" style="margin-top:48px;">Shelved</div>
+
+  <main class="grid">
+
+    <div class="card" style="opacity:0.5;cursor:default;">
+      <div class="card-top">
+        <span class="card-name">Transfer Availability</span>
+        <span class="badge badge-shelf">Shelved</span>
+      </div>
+      <p class="card-desc">Player availability scoring system. Weighted model across transfer status, contract length, player interest and club stance. Integrated into Scout Pad pipeline.</p>
+    </div>
+
+    <div class="card" style="opacity:0.5;cursor:default;">
+      <div class="card-top">
+        <span class="card-name">FBref Pipeline</span>
+        <span class="badge badge-shelf">Merging</span>
+      </div>
+      <p class="card-desc">Standalone FBref scraper writing to Supabase. Being absorbed into chief-scout/pipeline as a scheduled data stage. Separate repo deprecated.</p>
+    </div>
+
+  </main>
+
 </body>
 </html>

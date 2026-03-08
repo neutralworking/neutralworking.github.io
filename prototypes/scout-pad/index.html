@@ -6,107 +6,283 @@
   <title>Scout Pad — Lamine Yamal</title>
   <style>
     :root {
-      --bg: #080c12;
-      --surface: #0f1520;
-      --surface2: #161e2e;
-      --border: #1e2a3a;
-      --border2: #253040;
-      --accent: #4f8ef7;
-      --accent-dim: rgba(79,142,247,0.15);
-      --green: #22c55e;
-      --green-dim: rgba(34,197,94,0.12);
-      --amber: #f59e0b;
-      --amber-dim: rgba(245,158,11,0.12);
-      --amber-glow: rgba(245,158,11,0.35);
-      --text: #e8edf5;
-      --text2: #8899aa;
-      --text3: #4a5a6a;
-      --pitch: #0a1f0a;
-      --pitch-line: rgba(255,255,255,0.06);
+      --bg: #060606;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #242424;
+      --border2: #333333;
+      --accent: #005FFF;
+      --accent-dim: rgba(0,95,255,0.10);
+      --accent-border: rgba(0,95,255,0.35);
+      --green: #00C853;
+      --green-dim: rgba(0,200,83,0.10);
+      --green-glow: rgba(0,200,83,0.22);
+      --amber: #FF9800;
+      --amber-dim: rgba(255,152,0,0.10);
+      --amber-glow: rgba(255,152,0,0.28);
+      --red: #FF2442;
+      --red-dim: rgba(255,36,66,0.10);
+      --text: #ffffff;
+      --text2: #888888;
+      --text3: #3a3a3a;
     }
 
-    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { height: 100%; overflow: hidden; margin: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+    }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       overscroll-behavior: none;
     }
 
-    /* ── Shell ── */
-    .shell { display: flex; flex-direction: column; height: 100dvh; }
-    .body-split { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-
-    /* ── Topbar ── */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 11px 18px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    /* Shell */
+    .shell {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
     }
-    .topbar-logo { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3); }
-    .topbar-count { font-size: 0.72rem; font-weight: 600; color: var(--text3); }
-    .progress-track { height: 2px; background: var(--border); flex-shrink: 0; }
-    .progress-fill { height: 100%; background: var(--accent); width: 12%; }
 
-    /* ── Player brief ── */
-    .player-brief { padding: 12px 18px 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .brief-name { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 6px; }
-    .brief-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 7px; }
-    .brief-metrics { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .brief-metric { display: flex; align-items: center; gap: 4px; }
-    .brief-metric-label { font-size: 0.6rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
-    .brief-arch { font-size: 0.68rem; color: var(--text3); font-weight: 500; }
+    /* Topbar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      height: 44px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-back {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text3);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .topbar-back:hover { color: var(--text2); }
+    .topbar-logo {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text3);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .topbar-count {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text3);
+    }
 
-    /* ── Badges ── */
+    /* Progress track */
+    .progress-track {
+      height: 2px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 12%;
+    }
+
+    /* Player brief */
+    .player-brief {
+      padding: 11px 18px 10px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .brief-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .brief-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 7px;
+    }
     .badge {
-      display: inline-flex; align-items: center; border-radius: 5px;
-      padding: 2px 7px; font-size: 0.68rem; font-weight: 700; border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 2px;
+      padding: 2px 7px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border: 1px solid transparent;
     }
     .badge-club   { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
     .badge-nation { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
     .badge-pos    { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
-    .badge-mvt5   { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,158,11,0.3); }
+    .badge-mvt    { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,158,11,0.3); }
 
-    /* ── Dots ── */
-    .dot-row { display: flex; gap: 2px; align-items: center; }
+    .brief-metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .scarcity-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .scarcity-label {
+      font-size: 0.6rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .dot-row { display: flex; gap: 3px; align-items: center; }
     .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
     .dot-on  { background: var(--amber); }
     .dot-off { background: var(--border2); }
 
-    /* ── Tab bar ── */
-    .tab-bar { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .arch-label {
+      font-size: 0.68rem;
+      color: var(--text3);
+      font-weight: 500;
+    }
+    .brief-sep {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text3);
+      margin: 0 2px;
+      vertical-align: middle;
+    }
+
+    .personality-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 2px;
+      padding: 3px 9px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Body split */
+    .body-split {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn {
-      flex: 1; height: 38px; font-size: 0.78rem; font-weight: 700;
-      background: transparent; border: none; color: var(--text3);
-      cursor: pointer; position: relative; letter-spacing: 0.03em;
+      flex-shrink: 0;
+      height: 38px;
+      padding: 0 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: transparent;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      position: relative;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
     }
     .tab-btn.active { color: var(--text); }
     .tab-btn.active::after {
-      content: ""; position: absolute; bottom: 0; left: 20%; right: 20%;
-      height: 2px; background: var(--accent); border-radius: 2px;
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+    .tab-btn.tab-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: default;
     }
 
-    /* ── Tab content ── */
-    .tab-content { flex: 1; overflow-y: auto; scrollbar-width: none; }
-    .tab-content::-webkit-scrollbar { width: 0; }
+    /* Tab content */
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .tab-content::-webkit-scrollbar { display: none; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* ── My Call tab ── */
-    .mycall-tab { padding: 16px 18px; display: flex; flex-direction: column; gap: 18px; }
-    .dof-section { display: flex; flex-direction: column; gap: 7px; }
-    .dof-label {
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text3);
+    /* ── MY CALL TAB ── */
+    .mycall-tab {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
-    .dof-label-sub { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 0.68rem; }
+    .dof-section {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .dof-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .dof-label-sub {
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      font-size: 0.68rem;
+      color: var(--text3);
+    }
 
-    /* ── Pursuit buttons ── */
+    /* Pursuit */
     .pursuit-row { display: flex; gap: 6px; }
     .pursuit-btn {
-      flex: 1; height: 40px; border-radius: 10px; font-size: 0.8rem; font-weight: 700;
-      border: 1px solid var(--border2); background: var(--surface2); color: var(--text3);
-      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      flex: 1;
+      height: 40px;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text3);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
     }
     .pursuit-btn:active { transform: scale(0.94); }
     .pursuit-btn.active-pass      { background: var(--surface); border-color: var(--text3); color: var(--text2); }
@@ -114,100 +290,491 @@
     .pursuit-btn.active-interested { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
     .pursuit-btn.active-priority  { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); box-shadow: 0 0 14px var(--amber-glow); }
 
-    /* ── Valuation ── */
+    /* Valuation */
     .valuation-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .val-input-wrap { display: flex; align-items: center; gap: 6px; }
     .val-input {
-      width: 80px; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 7px 10px; color: var(--text); font-size: 1rem; font-weight: 700;
-      outline: none; font-family: inherit; text-align: right;
+      width: 80px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 7px 10px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+      outline: none;
+      font-family: inherit;
+      text-align: right;
     }
     .val-input:focus { border-color: var(--accent); }
     .val-input::placeholder { color: var(--text3); font-weight: 400; }
     .val-unit { font-size: 0.85rem; font-weight: 700; color: var(--text2); }
     .val-hint { font-size: 0.68rem; color: var(--text3); }
 
-    /* ── Fit note + Notes ── */
+    /* Fit + Notes */
     .fit-input {
-      width: 100%; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 8px 10px; color: var(--text); font-size: 0.85rem;
-      outline: none; font-family: inherit;
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 8px 10px;
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      font-family: inherit;
     }
     .fit-input:focus { border-color: var(--accent); }
     .fit-input::placeholder { color: var(--text3); }
     .notes-area {
-      width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px 12px; color: var(--text); font-size: 0.82rem; resize: none; outline: none;
-      font-family: inherit; line-height: 1.6; min-height: 90px;
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 0.82rem;
+      resize: none;
+      outline: none;
+      font-family: inherit;
+      line-height: 1.6;
+      min-height: 90px;
     }
     .notes-area::placeholder { color: var(--text3); }
     .notes-area:focus { border-color: var(--accent); }
 
-    /* ── Data tab (layout only) ── */
-    .data-tab { padding: 14px 18px; }
-    .data-sec { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
-    .data-sec:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .sh {
-      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 7px;
+    /* ── ATTRIBUTES TABS (Technical + Mental) ── */
+    .attrs-tab { padding: 0 0 16px; }
+    .attrs-section-header {
+      padding: 12px 18px 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
     }
-    .data-placeholder {
-      height: 38px; background: var(--surface2); border-radius: 8px; border: 1px solid var(--border);
-      display: flex; align-items: center; padding: 0 12px; font-size: 0.8rem; color: var(--text3);
+    .attrs-section-title {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text3);
     }
-    .data-placeholder-tall { height: 60px; }
-    .pill-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
-    .pill {
-      border-radius: 16px; padding: 4px 10px; font-size: 0.76rem; font-weight: 600;
-      border: 1px solid var(--border2); background: var(--surface2); color: var(--text3);
+    .attrs-section-note {
+      font-size: 0.6rem;
+      color: var(--text3);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
     }
-    .pill.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
-    /* ── Action bar ── */
+    .attr-row {
+      padding: 0 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .attr-row-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 44px;
+    }
+    .attr-name {
+      flex: 1;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .attr-score {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 22px;
+      border-radius: 2px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0 5px;
+    }
+    /* Score tiers: 90+ accent, 75-89 green, 60-74 amber, <60 red */
+    .score-accent { background: var(--accent-dim); color: var(--accent); }
+    .score-green  { background: var(--green-dim);  color: var(--green); }
+    .score-amber  { background: var(--amber-dim);  color: var(--amber); }
+    .score-red    { background: var(--red-dim);    color: var(--red); }
+
+    .attr-verify-btn {
+      height: 26px;
+      padding: 0 8px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .attr-verify-btn.verified {
+      background: var(--green-dim);
+      border-color: rgba(34,197,94,0.3);
+      color: var(--green);
+    }
+    .attr-dispute-btn {
+      height: 26px;
+      padding: 0 8px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .attr-dispute-btn.disputed {
+      background: var(--red-dim);
+      border-color: rgba(239,68,68,0.3);
+      color: var(--red);
+    }
+
+    /* Inline dispute panel */
+    .dispute-panel {
+      display: none;
+      padding: 12px 0 14px;
+      border-top: 1px solid var(--border);
+    }
+    .dispute-panel.open { display: block; }
+    .dispute-source {
+      font-size: 0.65rem;
+      color: var(--text3);
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
+    .dispute-source strong { color: var(--text2); font-weight: 600; }
+    .dispute-composite {
+      font-size: 0.65rem;
+      color: var(--text3);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .dispute-why-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 5px;
+    }
+    .dispute-textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 8px 10px;
+      color: var(--text);
+      font-size: 0.78rem;
+      resize: none;
+      outline: none;
+      font-family: inherit;
+      line-height: 1.5;
+      min-height: 56px;
+      margin-bottom: 8px;
+    }
+    .dispute-textarea::placeholder { color: var(--text3); }
+    .dispute-textarea:focus { border-color: var(--accent); }
+    .dispute-override-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .dispute-override-label {
+      font-size: 0.72rem;
+      color: var(--text2);
+      font-weight: 500;
+    }
+    .dispute-override-input {
+      width: 60px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      padding: 5px 8px;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      outline: none;
+      font-family: inherit;
+      text-align: center;
+    }
+    .dispute-override-input:focus { border-color: var(--accent); }
+    .dispute-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .dispute-cancel {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      cursor: pointer;
+    }
+    .dispute-submit {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--red-dim);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: var(--red);
+      cursor: pointer;
+    }
+
+    /* Personality block (Mental tab) */
+    .personality-block {
+      margin: 14px 18px 2px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 14px;
+    }
+    .personality-type {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+    .personality-sub {
+      font-size: 0.72rem;
+      color: var(--text2);
+      margin-bottom: 8px;
+    }
+    .personality-desc {
+      font-size: 0.76rem;
+      color: var(--text2);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .personality-traits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    .trait-chip {
+      background: var(--amber-dim);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 2px;
+      padding: 3px 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--amber);
+    }
+    .personality-caption {
+      font-size: 0.6rem;
+      color: var(--text3);
+    }
+
+    /* ── STATS TAB ── */
+    .stats-tab { padding: 0 18px 16px; }
+    .stats-header {
+      padding: 12px 0 4px;
+    }
+    .stats-season {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .stats-meta {
+      font-size: 0.7rem;
+      color: var(--text3);
+      margin-bottom: 14px;
+    }
+    .stats-section {
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .sh {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 8px;
+    }
+    .sh-amber {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+    .stat-value {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .stats-upscale-note {
+      font-size: 0.6rem;
+      color: var(--text3);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── TAGS TAB ── */
+    .tags-tab { padding: 14px 18px 16px; }
+    .tags-header {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 14px;
+    }
+    .tags-group {
+      margin-bottom: 14px;
+    }
+    .tags-group-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 7px;
+    }
+    .tag-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text2);
+    }
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .tag-dot-accent { background: var(--accent); }
+    .tag-dot-amber  { background: var(--amber); }
+    .tag-dot-green  { background: var(--green); }
+    .tag-dot-red    { background: var(--red); }
+    .tag-dot-text2  { background: var(--text2); }
+
+    .add-tag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 3px;
+      padding: 5px 12px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      border: 1px dashed var(--border2);
+      background: transparent;
+      color: var(--text3);
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* ── ACTION BAR ── */
     .action-bar {
-      display: flex; gap: 8px; padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+      padding: 10px 16px;
       padding-bottom: max(10px, env(safe-area-inset-bottom));
-      border-top: 1px solid var(--border); flex-shrink: 0;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
     }
     .btn-skip {
-      flex: 1; height: 46px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;
-      background: transparent; border: 1px solid var(--border2); color: var(--text3); cursor: pointer;
+      flex: 1;
+      height: 46px;
+      border-radius: 3px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      cursor: pointer;
     }
     .btn-save {
-      flex: 2.5; height: 46px; border-radius: 12px; font-size: 0.9rem; font-weight: 700;
-      background: var(--surface2); border: 1px solid var(--border2); color: var(--text3);
-      cursor: default; transition: all 0.2s;
+      flex: 2.5;
+      height: 46px;
+      border-radius: 3px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      cursor: default;
+      transition: all 0.2s;
     }
     .btn-save.hot {
-      background: var(--green); border-color: var(--green); color: white;
-      cursor: pointer; box-shadow: 0 3px 16px rgba(34,197,94,0.25);
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 3px 16px var(--green-glow);
     }
   </style>
 </head>
 <body>
   <div class="shell">
+
     <!-- Topbar -->
-    <div class="topbar">
+    <div class="topbar" style="position:relative;">
+      <a href="../../index.html" class="topbar-back">← index</a>
       <span class="topbar-logo">Scout Pad</span>
-      <div style="display:flex;align-items:center;gap:14px;">
-        <a href="../../index.html" style="font-size:0.68rem;color:var(--text3);text-decoration:none;font-weight:600;">← index</a>
-        <span class="topbar-count">1 / 8</span>
-      </div>
+      <span class="topbar-count">1 / 8</span>
     </div>
+
+    <!-- Progress track -->
     <div class="progress-track"><div class="progress-fill"></div></div>
 
-    <!-- Player brief -->
+    <!-- Player brief header -->
     <div class="player-brief">
       <div class="brief-name">Lamine Yamal</div>
-      <div class="brief-row">
+      <div class="brief-badges">
         <span class="badge badge-club">FC Barcelona</span>
         <span class="badge badge-nation">Spain</span>
-        <span class="badge badge-mvt5">MVT 5</span>
+        <span class="badge badge-mvt">MVT 5</span>
         <span class="badge badge-pos">WF</span>
       </div>
-      <div class="brief-metrics">
-        <span class="brief-metric">
-          <span class="brief-metric-label">Scarcity</span>
+      <div class="brief-metrics-row">
+        <div class="scarcity-group">
+          <span class="scarcity-label">Scarcity</span>
           <span class="dot-row">
             <span class="dot dot-on"></span>
             <span class="dot dot-on"></span>
@@ -215,8 +782,12 @@
             <span class="dot dot-on"></span>
             <span class="dot dot-on"></span>
           </span>
-        </span>
-        <span class="brief-arch">The Superstar</span>
+        </div>
+        <span class="brief-sep"></span>
+        <span class="arch-label">The Superstar</span>
+      </div>
+      <div>
+        <span class="personality-chip">INSP &middot; The Artist</span>
       </div>
     </div>
 
@@ -224,15 +795,20 @@
       <!-- Tab bar -->
       <div class="tab-bar">
         <button class="tab-btn active" id="tab-mycall" onclick="switchTab('mycall')">My Call</button>
-        <button class="tab-btn" id="tab-data" onclick="switchTab('data')">Data</button>
+        <button class="tab-btn" id="tab-technical" onclick="switchTab('technical')">Technical</button>
+        <button class="tab-btn" id="tab-mental" onclick="switchTab('mental')">Mental</button>
+        <button class="tab-btn" id="tab-stats" onclick="switchTab('stats')">Stats</button>
+        <button class="tab-btn" id="tab-tags" onclick="switchTab('tags')">Tags</button>
+        <button class="tab-btn tab-disabled" id="tab-history">History</button>
       </div>
 
       <!-- Tab content -->
       <div class="tab-content">
 
-        <!-- My Call panel -->
+        <!-- ── MY CALL PANEL ── -->
         <div class="tab-panel active" id="panel-mycall">
           <div class="mycall-tab">
+
             <div class="dof-section">
               <div class="dof-label">Pursuit</div>
               <div class="pursuit-row">
@@ -247,121 +823,346 @@
               <div class="dof-label">Valuation</div>
               <div class="valuation-row">
                 <div class="val-input-wrap">
-                  <input class="val-input" type="number" min="0" max="999" placeholder="—" />
+                  <input class="val-input" id="val-input" type="number" min="0" max="999" placeholder="—" />
                   <span class="val-unit">M€</span>
                 </div>
-                <span class="val-hint">market: MVT 5 · scarce — expect premium</span>
+                <span class="val-hint">MVT 5 · scarce — expect premium</span>
               </div>
             </div>
 
             <div class="dof-section">
-              <div class="dof-label">Fit Note <span class="dof-label-sub">one line — where/how they play in your system</span></div>
-              <input class="fit-input" type="text" placeholder="e.g. plays behind our CF as the 10…" />
+              <div class="dof-label">Fit Note <span class="dof-label-sub">— one line: where/how they play in your system</span></div>
+              <input class="fit-input" id="fit-input" type="text" placeholder="e.g. plays behind our CF as the 10…" />
             </div>
 
             <div class="dof-section">
-              <div class="dof-label">Notes <span class="dof-label-sub">observations, intel, anything</span></div>
-              <textarea class="notes-area" rows="5" placeholder="Your read on this player…"></textarea>
+              <div class="dof-label">Notes <span class="dof-label-sub">— observations, intel, anything</span></div>
+              <textarea class="notes-area" id="notes-area" rows="5" placeholder="Your read on this player…"></textarea>
             </div>
+
           </div>
         </div>
 
-        <!-- Data panel -->
-        <div class="tab-panel" id="panel-data">
-          <div class="data-tab">
-            <div class="data-sec">
-              <div class="sh">Position · WF</div>
-              <div class="data-placeholder">WF primary · no secondary</div>
+        <!-- ── TECHNICAL PANEL ── -->
+        <div class="tab-panel" id="panel-technical">
+          <div class="attrs-tab">
+            <div class="attrs-section-header">
+              <span class="attrs-section-title">Technical Attributes &middot; 15</span>
+              <span class="attrs-section-note">(tap dispute to flag calculation errors)</span>
             </div>
-            <div class="data-sec">
-              <div class="sh">Rating</div>
-              <div class="data-placeholder">Level 92 · Peak 96 · Elite</div>
-            </div>
-            <div class="data-sec">
-              <div class="sh">Style</div>
-              <div class="pill-row">
-                <span class="pill on">Attacking</span>
-                <span class="pill">Balanced</span>
-                <span class="pill">Cautious</span>
-              </div>
-              <div class="pill-row" style="margin-top:8px">
-                <span class="pill on">Right</span>
-                <span class="pill">Left</span>
-                <span class="pill">Either</span>
-              </div>
-              <div class="pill-row" style="margin-top:8px">
-                <span class="pill on">Agile</span>
-                <span class="pill">Speedy</span>
-                <span class="pill">Dynamic</span>
-              </div>
-            </div>
-            <div class="data-sec">
-              <div class="sh">Model</div>
-              <div class="data-placeholder">Wizard</div>
-            </div>
-            <div class="data-sec">
-              <div class="sh">Archetype</div>
-              <div class="pill-row">
-                <span class="pill on">The Superstar</span>
-                <span class="pill">The Entertainer</span>
-                <span class="pill">The Mercenary</span>
-              </div>
-            </div>
-            <div class="data-sec">
-              <div class="sh">Traits · 4</div>
-              <div class="pill-row">
-                <span class="pill on">Flamboyant</span>
-                <span class="pill on">Talented</span>
-                <span class="pill on">Charismatic</span>
-                <span class="pill on">Mercurial</span>
-                <span class="pill">Composed</span>
-                <span class="pill">Determined</span>
-              </div>
-            </div>
+
+            <!-- Attribute rows injected by JS -->
+            <div id="technical-attrs"></div>
           </div>
         </div>
 
-      </div>
-    </div>
+        <!-- ── MENTAL PANEL ── -->
+        <div class="tab-panel" id="panel-mental">
+          <div class="attrs-tab">
+
+            <!-- Personality block -->
+            <div class="personality-block">
+              <div class="personality-type">INSP &middot; The Artist</div>
+              <div class="personality-sub">Inspirational &middot; Creative &middot; Expressive</div>
+              <div class="personality-desc">Driven by self-expression and the desire to create moments. High flair, vision and guile. Can be inconsistent under rigid tactical constraints.</div>
+              <div class="personality-traits">
+                <span class="trait-chip">Flamboyant</span>
+                <span class="trait-chip">Mercurial</span>
+                <span class="trait-chip">Charismatic</span>
+              </div>
+              <div class="personality-caption">from scouting_profiles.personality_type</div>
+            </div>
+
+            <div class="attrs-section-header" style="margin-top:12px;">
+              <span class="attrs-section-title">Mental Attributes &middot; 14</span>
+              <span class="attrs-section-note">(tap dispute to flag calculation errors)</span>
+            </div>
+
+            <div id="mental-attrs"></div>
+          </div>
+        </div>
+
+        <!-- ── STATS PANEL ── -->
+        <div class="tab-panel" id="panel-stats">
+          <div class="stats-tab">
+            <div class="stats-header">
+              <div class="stats-season">2024/25 &middot; FC Barcelona &middot; La Liga</div>
+              <div class="stats-meta">38 apps &middot; 3,180 min &middot; FBref</div>
+            </div>
+
+            <!-- Goal Contribution -->
+            <div class="stats-section">
+              <div class="sh">Goal Contribution</div>
+              <div class="stat-row"><span class="stat-label">Goals</span><span class="stat-value">18</span></div>
+              <div class="stat-row"><span class="stat-label">xG</span><span class="stat-value">15.4</span></div>
+              <div class="stat-row"><span class="stat-label">npxG</span><span class="stat-value">14.1</span></div>
+              <div class="stat-row"><span class="stat-label">Assists</span><span class="stat-value">14</span></div>
+              <div class="stat-row"><span class="stat-label">xA</span><span class="stat-value">11.8</span></div>
+              <div class="stat-row"><span class="stat-label">SCA/90</span><span class="stat-value">5.82</span></div>
+              <div class="stat-row"><span class="stat-label">GCA/90</span><span class="stat-value">1.14</span></div>
+            </div>
+
+            <!-- Next-Gen WF Profile -->
+            <div class="stats-section">
+              <div class="sh-amber">Next-Gen &middot; WF Profile</div>
+              <div class="stat-row"><span class="stat-label">Progressive Carries/90</span><span class="stat-value">4.8</span></div>
+              <div class="stat-row"><span class="stat-label">Carries into Pen. Area/90</span><span class="stat-value">2.1</span></div>
+              <div class="stat-row"><span class="stat-label">Take-ons Attempted/90</span><span class="stat-value">7.3</span></div>
+              <div class="stat-row"><span class="stat-label">Take-on Success%</span><span class="stat-value">73%</span></div>
+              <div class="stat-row"><span class="stat-label">Dispossessed/90</span><span class="stat-value">1.4</span></div>
+              <div class="stat-row"><span class="stat-label">Final Third Touches/90</span><span class="stat-value">18.9</span></div>
+              <div class="stats-upscale-note">Upscaled to WF role profile &middot; class weights: Dribbler 0.4, Creator 0.35, Sprinter 0.25</div>
+            </div>
+
+            <!-- Passing -->
+            <div class="stats-section">
+              <div class="sh">Passing</div>
+              <div class="stat-row"><span class="stat-label">Pass Completion%</span><span class="stat-value">82%</span></div>
+              <div class="stat-row"><span class="stat-label">Prog. Passes/90</span><span class="stat-value">4.1</span></div>
+              <div class="stat-row"><span class="stat-label">Key Passes/90</span><span class="stat-value">3.6</span></div>
+              <div class="stat-row"><span class="stat-label">Passes into Pen. Area/90</span><span class="stat-value">2.8</span></div>
+            </div>
+
+            <!-- Defending -->
+            <div class="stats-section">
+              <div class="sh">Defending</div>
+              <div class="stat-row"><span class="stat-label">Pressures/90</span><span class="stat-value">12.4</span></div>
+              <div class="stat-row"><span class="stat-label">Press Success%</span><span class="stat-value">28%</span></div>
+              <div class="stat-row"><span class="stat-label">Tackles/90</span><span class="stat-value">0.8</span></div>
+              <div class="stat-row"><span class="stat-label">Interceptions/90</span><span class="stat-value">0.4</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── TAGS PANEL ── -->
+        <div class="tab-panel" id="panel-tags">
+          <div class="tags-tab">
+            <div class="tags-header">Tags &middot; 12</div>
+
+            <div class="tags-group">
+              <div class="tags-group-label">Quality</div>
+              <div class="tag-pills">
+                <span class="tag-pill"><span class="tag-dot tag-dot-accent"></span>World Class</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-accent"></span>Elite Level</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-accent"></span>Peak Form</span>
+              </div>
+            </div>
+
+            <div class="tags-group">
+              <div class="tags-group-label">Character</div>
+              <div class="tag-pills">
+                <span class="tag-pill"><span class="tag-dot tag-dot-amber"></span>Superstar Mentality</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-amber"></span>High-Profile</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-amber"></span>Media Magnet</span>
+              </div>
+            </div>
+
+            <div class="tags-group">
+              <div class="tags-group-label">Market</div>
+              <div class="tag-pills">
+                <span class="tag-pill"><span class="tag-dot tag-dot-green"></span>Untouchable</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-green"></span>Premium Valuation</span>
+              </div>
+            </div>
+
+            <div class="tags-group">
+              <div class="tags-group-label">Risk</div>
+              <div class="tag-pills">
+                <span class="tag-pill"><span class="tag-dot tag-dot-red"></span>Injury Concern</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-red"></span>Contract Year</span>
+              </div>
+            </div>
+
+            <div class="tags-group">
+              <div class="tags-group-label">Tactical</div>
+              <div class="tag-pills">
+                <span class="tag-pill"><span class="tag-dot tag-dot-text2"></span>Wide Threat</span>
+                <span class="tag-pill"><span class="tag-dot tag-dot-text2"></span>High Pressure System</span>
+              </div>
+            </div>
+
+            <button class="add-tag-btn">+ add tag</button>
+          </div>
+        </div>
+
+      </div><!-- end tab-content -->
+    </div><!-- end body-split -->
 
     <!-- Action bar -->
     <div class="action-bar">
       <button class="btn-skip">Skip <span style="opacity:0.3;font-size:0.68rem">esc</span></button>
       <button class="btn-save" id="btn-save">No changes</button>
     </div>
-  </div>
+
+  </div><!-- end shell -->
 
   <script>
+    // ── Tab switching ──
     function switchTab(name) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('tab-' + name).classList.add('active');
-      document.getElementById('panel-' + name).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      var btn = document.getElementById('tab-' + name);
+      var panel = document.getElementById('panel-' + name);
+      if (btn) btn.classList.add('active');
+      if (panel) panel.classList.add('active');
     }
 
-    let hasDraft = false;
-
+    // ── hasDraft tracking ──
     function updateSaveBtn() {
-      const btn = document.getElementById('btn-save');
-      hasDraft = document.querySelector('.pursuit-btn.active-pass, .pursuit-btn.active-watch, .pursuit-btn.active-interested, .pursuit-btn.active-priority') !== null
-        || document.querySelector('.val-input').value.trim() !== ''
-        || document.querySelector('.fit-input').value.trim() !== ''
-        || document.querySelector('.notes-area').value.trim() !== '';
+      var hasPursuit = document.querySelector(
+        '.pursuit-btn.active-pass, .pursuit-btn.active-watch, .pursuit-btn.active-interested, .pursuit-btn.active-priority'
+      ) !== null;
+      var valFilled = document.getElementById('val-input').value.trim() !== '';
+      var fitFilled = document.getElementById('fit-input').value.trim() !== '';
+      var notesFilled = document.getElementById('notes-area').value.trim() !== '';
+      var hasDraft = hasPursuit || valFilled || fitFilled || notesFilled;
+      var btn = document.getElementById('btn-save');
       btn.classList.toggle('hot', hasDraft);
       btn.textContent = hasDraft ? 'Save & Next ↵' : 'No changes';
     }
 
-    document.querySelector('.val-input').addEventListener('input', updateSaveBtn);
-    document.querySelector('.fit-input').addEventListener('input', updateSaveBtn);
-    document.querySelector('.notes-area').addEventListener('input', updateSaveBtn);
+    document.getElementById('val-input').addEventListener('input', updateSaveBtn);
+    document.getElementById('fit-input').addEventListener('input', updateSaveBtn);
+    document.getElementById('notes-area').addEventListener('input', updateSaveBtn);
 
+    // ── Pursuit toggle ──
     function togglePursuit(btn) {
-      const pursuit = btn.dataset.pursuit;
-      const isActive = btn.classList.contains('active-' + pursuit);
-      document.querySelectorAll('.pursuit-btn').forEach(b => { b.className = 'pursuit-btn'; });
-      if (!isActive) btn.classList.add('active-' + pursuit);
+      var pursuit = btn.dataset.pursuit;
+      var activeClass = 'active-' + pursuit;
+      var isActive = btn.classList.contains(activeClass);
+      document.querySelectorAll('.pursuit-btn').forEach(function(b) {
+        b.className = 'pursuit-btn';
+      });
+      if (!isActive) {
+        btn.classList.add(activeClass);
+      }
       updateSaveBtn();
     }
+
+    // ── Score tier helper ──
+    function scoreClass(v) {
+      if (v >= 90) return 'score-accent';
+      if (v >= 75) return 'score-green';
+      if (v >= 60) return 'score-amber';
+      return 'score-red';
+    }
+
+    // ── Dispute expand/collapse ──
+    function toggleDispute(rowId) {
+      var panel = document.getElementById('dp-' + rowId);
+      var btn = document.getElementById('dbtn-' + rowId);
+      var isOpen = panel.classList.contains('open');
+      // Close all dispute panels first
+      document.querySelectorAll('.dispute-panel').forEach(function(p) {
+        p.classList.remove('open');
+      });
+      document.querySelectorAll('.attr-dispute-btn').forEach(function(b) {
+        b.classList.remove('disputed');
+        b.textContent = 'Dispute';
+      });
+      if (!isOpen) {
+        panel.classList.add('open');
+        btn.classList.add('disputed');
+        btn.textContent = 'Disputing';
+      }
+    }
+
+    function cancelDispute(rowId) {
+      var panel = document.getElementById('dp-' + rowId);
+      var btn = document.getElementById('dbtn-' + rowId);
+      panel.classList.remove('open');
+      btn.classList.remove('disputed');
+      btn.textContent = 'Dispute';
+    }
+
+    function toggleVerify(rowId) {
+      var btn = document.getElementById('vbtn-' + rowId);
+      btn.classList.toggle('verified');
+      btn.textContent = btn.classList.contains('verified') ? '✓ Verified' : 'Verify';
+    }
+
+    // ── Build attribute row HTML ──
+    function buildAttrRow(id, name, score, sourceNote, calcNote, compositeNote) {
+      var sc = scoreClass(score);
+      return '<div class="attr-row" id="arow-' + id + '">' +
+        '<div class="attr-row-inner">' +
+          '<span class="attr-name">' + name + '</span>' +
+          '<span class="attr-score ' + sc + '">' + score + '</span>' +
+          '<button class="attr-verify-btn" id="vbtn-' + id + '" onclick="toggleVerify(\'' + id + '\')">Verify</button>' +
+          '<button class="attr-dispute-btn" id="dbtn-' + id + '" onclick="toggleDispute(\'' + id + '\')">Dispute</button>' +
+        '</div>' +
+        '<div class="dispute-panel" id="dp-' + id + '">' +
+          '<div class="dispute-source"><strong>Source:</strong> ' + sourceNote + '</div>' +
+          '<div class="dispute-composite"><strong>Calculated from:</strong> ' + calcNote + '<br>' + compositeNote + '</div>' +
+          '<div class="dispute-why-label">Why do you think this is wrong?</div>' +
+          '<textarea class="dispute-textarea" placeholder="override reasoning…" rows="2"></textarea>' +
+          '<div class="dispute-override-row">' +
+            '<span class="dispute-override-label">Override value:</span>' +
+            '<input class="dispute-override-input" type="number" min="0" max="99" placeholder="0–99" />' +
+          '</div>' +
+          '<div class="dispute-actions">' +
+            '<button class="dispute-cancel" onclick="cancelDispute(\'' + id + '\')">Cancel</button>' +
+            '<button class="dispute-submit">Submit dispute</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // ── Technical attributes ──
+    var technicalAttrs = [
+      { id: 'first_touch',    name: 'First Touch',    score: 89, calc: 'touch quality + control under pressure + first-touch directness', composite: 'Composite score: 89 → no position cap applied' },
+      { id: 'set_piece',      name: 'Set Piece',      score: 72, calc: 'direct free kick accuracy + corner delivery + set piece vision', composite: 'Composite score: 72 → capped at 72 by position weight (WF)' },
+      { id: 'carries',        name: 'Carries',        score: 91, calc: 'progressive carry distance + carry success rate + carry frequency', composite: 'Composite score: 93 → capped at 91 by position weight (WF)' },
+      { id: 'penalty',        name: 'Penalty',        score: 65, calc: 'penalty conversion rate + penalty composure rating', composite: 'Composite score: 65 → no position cap applied' },
+      { id: 'long_pass',      name: 'Long Pass',      score: 68, calc: 'long pass accuracy + progressive pass length + switch accuracy', composite: 'Composite score: 68 → no position cap applied' },
+      { id: 'close_control',  name: 'Close Control',  score: 94, calc: 'tight space retention + ball retention under press + body feints', composite: 'Composite score: 96 → capped at 94 by position weight (WF)' },
+      { id: 'through_ball',   name: 'Through Ball',   score: 83, calc: 'passing accuracy + through ball frequency + first touch composite', composite: 'Composite score: 78 → capped at 74 by position weight (WF)' },
+      { id: 'range',          name: 'Range',          score: 71, calc: 'range of passing + switch frequency + long ball accuracy', composite: 'Composite score: 71 → no position cap applied' },
+      { id: 'accuracy',       name: 'Accuracy',       score: 76, calc: 'shot accuracy + pass accuracy + delivery precision composite', composite: 'Composite score: 76 → no position cap applied' },
+      { id: 'crossing',       name: 'Crossing',       score: 77, calc: 'cross accuracy + cross frequency + delivery height variance', composite: 'Composite score: 77 → no position cap applied' },
+      { id: 'take_ons',       name: 'Take-ons',       score: 95, calc: 'dribble success rate + take-on frequency + ground duel win rate', composite: 'Composite score: 97 → capped at 95 by position weight (WF)' },
+      { id: 'skills',         name: 'Skills',         score: 92, calc: 'skill move variety + skill move execution + deceptive movement', composite: 'Composite score: 92 → no position cap applied' },
+      { id: 'tackling',       name: 'Tackling',       score: 31, calc: 'tackle success rate + tackle frequency + tackle timing', composite: 'Composite score: 31 → no position cap applied' },
+      { id: 'aerial_duels',   name: 'Aerial Duels',   score: 42, calc: 'aerial duel win rate + jump timing + aerial frequency', composite: 'Composite score: 42 → no position cap applied' },
+      { id: 'heading',        name: 'Heading',        score: 38, calc: 'heading accuracy + heading power + aerial positioning', composite: 'Composite score: 38 → no position cap applied' },
+    ];
+
+    var techHtml = '';
+    for (var i = 0; i < technicalAttrs.length; i++) {
+      var a = technicalAttrs[i];
+      techHtml += buildAttrRow(a.id, a.name, a.score, 'FBref 2024/25 · Real Players Active CSV', a.calc, a.composite);
+    }
+    document.getElementById('technical-attrs').innerHTML = techHtml;
+
+    // ── Mental attributes ──
+    var mentalAttrs = [
+      { id: 'decisions',      name: 'Decisions',      score: 82, calc: 'decision speed + decision quality under pressure + option selection', composite: 'Composite score: 82 → no position cap applied' },
+      { id: 'composure',      name: 'Composure',      score: 78, calc: 'composure index + high-pressure moments + late-game rating', composite: 'Composite score: 78 → no position cap applied' },
+      { id: 'leadership',     name: 'Leadership',     score: 61, calc: 'captain frequency + vocal influence + team performance uplift', composite: 'Composite score: 61 → no position cap applied' },
+      { id: 'communication',  name: 'Communication',  score: 55, calc: 'press trigger accuracy + coordinated press events + coverage calls', composite: 'Composite score: 55 → no position cap applied' },
+      { id: 'drive',          name: 'Drive',          score: 88, calc: 'sprint recovery rate + pressing intensity + high-intensity run count', composite: 'Composite score: 88 → no position cap applied' },
+      { id: 'discipline',     name: 'Discipline',     score: 63, calc: 'fouls per 90 + yellow card frequency + reckless challenge rate', composite: 'Composite score: 63 → no position cap applied' },
+      { id: 'guile',          name: 'Guile',          score: 91, calc: 'feint frequency + deceptive movement + opponent disorientation index', composite: 'Composite score: 93 → capped at 91 by position weight (WF)' },
+      { id: 'vision',         name: 'Vision',         score: 89, calc: 'key pass frequency + chance creation index + field awareness rating', composite: 'Composite score: 89 → no position cap applied' },
+      { id: 'flair',          name: 'Flair',          score: 96, calc: 'skill move diversity + highlight moment rate + entertainment index', composite: 'Composite score: 97 → capped at 96 by position weight (WF)' },
+      { id: 'anticipation',   name: 'Anticipation',   score: 85, calc: 'interception read rate + ball tracking + predictive positioning', composite: 'Composite score: 85 → no position cap applied' },
+      { id: 'bravery',        name: 'Bravery',        score: 74, calc: 'contact duel rate + risk-taking under pressure + exposure index', composite: 'Composite score: 74 → no position cap applied' },
+      { id: 'concentration',  name: 'Concentration',  score: 71, calc: 'error rate over 90 min + late-game performance + focus index', composite: 'Composite score: 71 → no position cap applied' },
+      { id: 'awareness',      name: 'Awareness',      score: 83, calc: 'off-ball movement quality + spatial awareness + positioning index', composite: 'Composite score: 83 → no position cap applied' },
+      { id: 'reactions',      name: 'Reactions',      score: 87, calc: 'reaction time index + loose ball recovery + first-to-ball rate', composite: 'Composite score: 87 → no position cap applied' },
+    ];
+
+    var mentalHtml = '';
+    for (var j = 0; j < mentalAttrs.length; j++) {
+      var m = mentalAttrs[j];
+      mentalHtml += buildAttrRow(m.id, m.name, m.score, 'FBref 2024/25 · Real Players Active CSV', m.calc, m.composite);
+    }
+    document.getElementById('mental-attrs').innerHTML = mentalHtml;
   </script>
 </body>
 </html>
